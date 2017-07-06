@@ -31,7 +31,6 @@ class AddPeople extends React.Component {
           <Button
             title="ADD"
             color="#841584"
-            accessibilityLabel="Learn more about this purple button"
           />
         </View>
       </View>

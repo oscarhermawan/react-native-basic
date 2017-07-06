@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  View,
-  FlatList,
-  Text,
-  Button,
-} from 'react-native';
+import { AppRegistry, View, FlatList, Text, Button } from 'react-native';
+import { connect } from 'react-redux'
+import { loadData } from '../actions'
 
 import axios from 'axios'
 
@@ -23,16 +18,17 @@ class People extends React.Component {
   };
 
   componentDidMount(){
-    axios.get('http://swapi.co/api/people/')
-    .then((people)=>{
-      // console.log(people);
-      this.setState({dataSource:people.data.results.map((result, index) => {
-        return {
-          key: index,
-          ...result,
-        }
-      })})
-    })
+    this.props.loadDataTriger()
+    // axios.get('http://swapi.co/api/people/')
+    // .then((people)=>{
+    //   // console.log(people);
+    //   this.setState({dataSource:people.data.results.map((result, index) => {
+    //     return {
+    //       key: index,
+    //       ...result,
+    //     }
+    //   })})
+    // })
   }
 
   render() {
@@ -40,7 +36,7 @@ class People extends React.Component {
     return (
       <View>
         <FlatList
-          data={this.state.dataSource}
+          data={this.props.peoples}
           renderItem={({item}) => <Text>{item.name}</Text>}
         />
       </View>
@@ -48,4 +44,16 @@ class People extends React.Component {
   }
 }
 
-export default People
+const mapStateToProps = (state) =>{
+  return{
+    peoples:state.peoples
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    loadDataTriger:()=>dispatch(loadData())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (People)
