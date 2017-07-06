@@ -34,7 +34,6 @@ class AddPeople extends React.Component {
             accessibilityLabel="Learn more about this purple button"
           />
         </View>
-
       </View>
     );
   }
